@@ -1,5 +1,15 @@
 package pl.edu.uksw.prir.messenger;
 
+/**
+ *
+ * @author Wojciech Pokora
+ * @author Jakub Pawlak
+ * @author Patryk Szewczyk
+ * @author Katarzyna Wiater
+ * @author Agnieszka Musiał
+ * @author Michał Darkowski
+ *
+ */
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
