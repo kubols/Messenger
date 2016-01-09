@@ -10,16 +10,13 @@ package pl.edu.uksw.prir.messenger;
  * @author Michał Darkowski
  *
  */
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.Date;
- 
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -31,31 +28,37 @@ import org.xml.sax.InputSource;
 
 
 public class Message {
-    private String message;
-    private int jid_id_from;
-    private int jid_id_to;
-   // private Date date;
+    private String body;
+    private String from;
+    private String id;
+    private String to;
+    // private String type;
+    // private Date date;
     
     Message(){
-        this.jid_id_from = 0;
-        this.jid_id_to = 0;
-        this.message = null;
+        this.from = null;
+        this.id = null;
+        this.to = null;
+        this.body = null;
     }
     
-    Message(String  m, int jid_from, int jid_to){
-        this.message = m;
-        this.jid_id_from = jid_from;
-        this.jid_id_to = jid_to;
+    Message(String  msg_body, String msg_from, String msg_id, String msg_to){
+        this.body = msg_body;
+        this.from = msg_from;
+        this.id = msg_id;
+        this.to = msg_to;
     }
     
     
     public void messageString() throws FileNotFoundException{
         final String xmlStr = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"+
-                                "<Message> \n"+
-                               "<To> \n"+ Integer.toString(this.jid_id_to)+"\n"+"</To> \n"+
-                               "<From> \n"+ Integer.toString(this.jid_id_from)+"\n"+"</From> \n"+
-                                "<Text> \n"+this.message+"\n"+"</Text> \n"+
-                                "</Message>";
+                                "<message \n"+
+                                "from= \""+ this.from+"\"\n"+
+                                "id= \""+ this.id+"\"\n"+
+                                "to= \""+ this.to+"\"\n"+
+                                ">\n"+
+                                "<body> \n"+this.body+"\n"+"</body> \n"+
+                                "</message>";
         
         Document doc = convertStringToDocument(xmlStr);
          
