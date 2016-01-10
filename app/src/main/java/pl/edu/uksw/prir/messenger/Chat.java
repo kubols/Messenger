@@ -7,11 +7,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.FileNotFoundException;
+
 public class Chat extends AppCompatActivity {
 
     private TextView msgView;
     private EditText msgEditText;
     private Button sendButton;
+    private String from, to, id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,12 @@ public class Chat extends AppCompatActivity {
     }
 
     private void sendMessage(View view){
-        String msg = msgEditText.getText().toString();
+        String msgStr = msgEditText.getText().toString();
+        Message msg = new Message(msgStr, from, id, to);
+        try {
+            msg.messageString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
