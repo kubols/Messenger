@@ -20,6 +20,7 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true">
         <EditText
+            android:id="@+id/msgEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/chat_hint"/>
@@ -27,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/send" />
+            android:text="@string/send"
+            android:onClick="sendMessage"/>
     </RelativeLayout>
 </RelativeLayout>
