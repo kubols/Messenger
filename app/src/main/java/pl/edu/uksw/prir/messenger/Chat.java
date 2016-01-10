@@ -1,5 +1,6 @@
 package pl.edu.uksw.prir.messenger;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,15 +24,22 @@ public class Chat extends AppCompatActivity {
 
         msgView = (TextView)findViewById(R.id.msgTextView);
         msgEditText = (EditText) findViewById(R.id.msgEditText);
+
+        Intent intent = getIntent();
+        from = intent.getStringExtra("from");
+        id = intent.getStringExtra("id");
+        to = intent.getStringExtra("to");
     }
 
     private void sendMessage(View view){
         String msgStr = msgEditText.getText().toString();
-        Message msg = new Message(msgStr, from, id, to);
-        try {
-            msg.messageString();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if (!msgStr.equals(null)) {
+            Message msg = new Message(msgStr, from, id, to);
+            try {
+                msg.messageString();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
