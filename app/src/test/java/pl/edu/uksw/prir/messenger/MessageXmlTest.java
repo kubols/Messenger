@@ -14,5 +14,10 @@ public class MessageXmlTest {
         msg.messageString();
         String body = msg.openMessageFromFile();
         System.out.println(body);
+        msg.parseXMLAndSetValues(body);
+        System.out.println("from: " + msg.getFrom());
+        System.out.println("to: " + msg.getTo());
+        System.out.println("id: " + msg.getId());
+        System.out.println("body: " + msg.getBody());
     }
 }
