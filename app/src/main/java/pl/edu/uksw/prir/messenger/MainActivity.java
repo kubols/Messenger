@@ -19,7 +19,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private Button chatButton;
-    private String from, id, to;
+    private String from, id, to = "";
     
 
     @Override
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         chatButton = (Button)findViewById(R.id.chatButton);
     }
 
-    private void openChat(View view){
+    public void openChat(View view){
         to = chatButton.getText().toString();
 
         Intent intent = new Intent(this, Chat.class);
