@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent serviceIntent = new Intent(this, MessangerService.class);
         chatButton = (Button)findViewById(R.id.chatButton);
     }
 
