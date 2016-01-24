@@ -10,6 +10,9 @@ package pl.edu.uksw.prir.messenger;
  * @author Michał Darkowski
  *
  */
+
+import android.util.Log;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -80,9 +83,9 @@ public class NioServer implements Runnable {
 					while (changes.hasNext()) {
 						ChangeRequest change = (ChangeRequest) changes.next();
 						switch (change.type) {
-						case ChangeRequest.CHANGEOPS:
-							SelectionKey key = change.socket.keyFor(this.selector);
-							key.interestOps(change.ops);
+							case ChangeRequest.CHANGEOPS:
+								SelectionKey key = change.socket.keyFor(this.selector);
+								key.interestOps(change.ops);
 						}
 					}
 					this.pendingChanges.clear();
@@ -204,6 +207,4 @@ public class NioServer implements Runnable {
 
 		return socketSelector;
 	}
-
-
 }

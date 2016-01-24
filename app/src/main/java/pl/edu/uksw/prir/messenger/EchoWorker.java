@@ -16,7 +16,7 @@ import java.util.List;
 
 public class EchoWorker implements Runnable {
 	private List queue = new LinkedList();
-	
+
 	public void processData(NioServer server, SocketChannel socket, byte[] data, int count) {
 		byte[] dataCopy = new byte[count];
 		System.arraycopy(data, 0, dataCopy, 0, count);
@@ -25,10 +25,10 @@ public class EchoWorker implements Runnable {
 			queue.notify();
 		}
 	}
-	
+
 	public void run() {
 		ServerDataEvent dataEvent;
-		
+
 		while(true) {
 			// Wait for data to become available
 			synchronized(queue) {
@@ -40,7 +40,7 @@ public class EchoWorker implements Runnable {
 				}
 				dataEvent = (ServerDataEvent) queue.remove(0);
 			}
-			
+
 			// Return to sender
 			dataEvent.server.send(dataEvent.socket, dataEvent.data);
 		}

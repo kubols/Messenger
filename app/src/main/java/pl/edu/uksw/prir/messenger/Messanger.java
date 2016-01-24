@@ -28,8 +28,9 @@ public class Messanger {
      * 
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        
+ //   public static void main(String[] args) {
+
+        /*
         startReceiver();
      
         try 
@@ -50,8 +51,9 @@ public class Messanger {
             e.printStackTrace();
         }
     }
-    
-    
+
+    */
+    /*
      public static void startReceiver() {
         (new Thread() {
             @Override
@@ -76,5 +78,6 @@ public class Messanger {
                 } 
             }
         }).start();
-    }
+    }*/
+ //   }
 }
