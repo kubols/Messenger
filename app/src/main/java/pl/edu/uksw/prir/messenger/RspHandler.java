@@ -1,5 +1,9 @@
 package pl.edu.uksw.prir.messenger;
 
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
+
 /**
  *
  * @author Wojciech Pokora
@@ -11,7 +15,7 @@ package pl.edu.uksw.prir.messenger;
  *
  */
 
-public class RspHandler {
+public class RspHandler  {
 	private byte[] rsp = null;
 
 	public synchronized boolean handleResponse(byte[] rsp) {
@@ -29,5 +33,7 @@ public class RspHandler {
 		}
 
 		System.out.println(new String(this.rsp));
+
+
 	}
 }

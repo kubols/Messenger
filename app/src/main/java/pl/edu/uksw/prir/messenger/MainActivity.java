@@ -11,6 +11,7 @@ package pl.edu.uksw.prir.messenger;
  */
 
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,6 +46,17 @@ public class MainActivity extends AppCompatActivity {
     private Button chatButton;
     private String from, id, to = "";
 
+    public static final String ACTION_NEW_MSG = "pl.edu.uksw.prir.messenger.NEW_MSG";
+    public static final String MSG_FIELD = "message";
+    private BroadcastReceiver myReceiver;
+
+
+    public void onReceive(Context context, Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            }
+        Log.i("cos","przyszedl broadcast");
+        }
 
     public final static String TAG = "ActivityMain";
     public static final String PKG = "info.lamatricexiste.network";
@@ -58,11 +70,17 @@ public class MainActivity extends AppCompatActivity {
 
         Context context = getApplicationContext();
 
+
+
+
+
+
+
         Log.i("cos", "start serw");
         try {
             EchoWorker worker = new EchoWorker();
             new Thread(worker).start();
-            new Thread(new NioServer(null, 5353, worker)).start();
+            new Thread(new NioServer(InetAddress.getByName("192.168.2.103"), 9090, worker)).start();
             Log.i("cos", "start serw udany");
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,27 +88,43 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(context, "start serw nieuadny", Toast.LENGTH_LONG).show();;
 
         }
+        new LongOperation().execute("");
+       // startService(new Intent(this, MessangerService.class));
 
-
-        Log.i("cos", "start klient");
-        try {
-            NioClient client = new NioClient(InetAddress.getByName("216.58.213.164"), 80);
-            //     Thread t = new Thread(client);
-            //  t.setDaemon(true);
-            //   t.start();
-            RspHandler handler = new RspHandler();
-            client.send("GET / HTTP/1.0\r\n\r\n".getBytes(), handler);
-            // handler.waitForResponse();
-            Log.i("cos", "start klient udany");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.i("cos", "start klient nieudany");
-            Toast.makeText(context, "start klient nieuadny", Toast.LENGTH_LONG).show();
-            ;
-
-        }
     }
 
+
+    private class LongOperation extends AsyncTask<String, Void, String> {
+
+        Context context = getApplicationContext();
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                NioClient client = new NioClient(InetAddress.getByName("192.168.2.103"), 9090);
+                //NioClient client = new NioClient(InetAddress.getByName("www.google.com"), 80);
+
+                Thread t = new Thread(client);
+                t.setDaemon(true);
+                t.start();
+                RspHandler handler = new RspHandler();
+                client.send("maly krok dla czlowieka".getBytes(), handler);
+                handler.waitForResponse();
+                Log.i("cos", "start klient udany");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i("cos", "start klient nieudany");
+
+            }
+            Log.i("cos", "executed");
+            return "Executed";
+        }
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
 
     public void openChat(View view){
         to = chatButton.getText().toString();
