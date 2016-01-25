@@ -10,12 +10,35 @@ package pl.edu.uksw.prir.messenger;
  * @author Michał Darkowski
  *
  */
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
+
 import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
 import java.util.List;
+import android.os.*;
+import android.content.BroadcastReceiver;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.content.Intent;
+import android.view.View;
+
 
 public class EchoWorker implements Runnable {
 	private List queue = new LinkedList();
+	ServerDataEvent hData;
+	public Context context;
+
+	EchoWorker(Context mcontext){
+		this.context = mcontext;
+	}
+
+
+
+
 
 	public void processData(NioServer server, SocketChannel socket, byte[] data, int count) {
 		byte[] dataCopy = new byte[count];
@@ -41,8 +64,23 @@ public class EchoWorker implements Runnable {
 				dataEvent = (ServerDataEvent) queue.remove(0);
 			}
 
+			hData = dataEvent;
+			new Handler(Looper.getMainLooper()).post(new Runnable() {
+				@Override
+				public void run() {
+
+					Intent intent = new Intent();
+					intent.putExtra("result", new String(hData.data));
+					intent.setAction("pl.edu.uksw.prir.messenger.Chat");
+					context.sendBroadcast(intent);
+					Log.i("cos","wysylam broadcast");
+				}
+			});
+
+
 			// Return to sender
-			dataEvent.server.send(dataEvent.socket, dataEvent.data);
+			byte[] a = "cos Server odebral".getBytes();
+			dataEvent.server.send(dataEvent.socket,a); // dataEvent.data);
 		}
 	}
 }

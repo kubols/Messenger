@@ -67,6 +67,7 @@ public class NioServer implements Runnable {
 					this.pendingData.put(socket, queue);
 				}
 				queue.add(ByteBuffer.wrap(data));
+				Log.i("cosss", new String(data));
 			}
 		}
 
